@@ -6,7 +6,7 @@
 /*   By: jlucas-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:18:47 by jlucas-l          #+#    #+#             */
-/*   Updated: 2019/02/09 19:29:53 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/11 18:43:12 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef	struct	s_ray
 typedef struct		s_sphere
 {
 	t_vector		center;
-	t_vector		r;
+	double			r;
 }					t_sphere;
 
 typedef struct		s_triangle

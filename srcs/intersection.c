@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 15:16:01 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/09 21:53:23 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/11 18:51:18 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ double	sphere_intersection(t_ray ray, t_sphere sphere)
 	oc = vector_sub(ray.origin, sphere.center);
 	double k1 = dot_product(ray.direction, ray.direction);
 	double k2 = 2 * dot_product(oc, ray.direction);
-	double k3 = dot_product(oc, oc) - vector_length(sphere.r) *
-	   	vector_length(sphere.r);
+	double k3 = dot_product(oc, oc) - sphere.r * sphere.r;
 	double diskr = k2 * k2 - 4 * k1 * k3;
 	if (diskr < 0)
 		return (0);

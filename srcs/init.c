@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 19:12:39 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/09 22:25:13 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/11 19:06:29 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,14 @@ void	init(t_render	*render)
 	render->sphere_nb = 1;
 	render->sphere = (t_sphere *)malloc(sizeof(t_sphere) * render->sphere_nb);
 	render->sphere[0].center = (t_vector){0, 0, 0, 1};
-	render->sphere[0].r = (t_vector){0, 40, 0, 0};
+	render->sphere[0].r = 20;
 
 	
-	render->light_nb = 3;
+	render->light_nb = 1;
 	render->light = (t_light *)malloc(sizeof(t_light) * render->light_nb);
 
-	render->light[0].position = (t_vector){0, 20, 0, 1};
-	render->light[0].intensity = 0.2;
-
-	render->light[1].position = (t_vector){0, 60, 0, 1};
-	render->light[1].intensity = 0.6;
-
-	render->light[1].position = (t_vector){0, 30, 30, 1};
-	render->light[1].intensity = 0.2;
+	render->light[0].position = (t_vector){30, 30, 30, 1};
+	render->light[0].intensity = 0.8;
 
 	//no one light sensivity can be more than 1.0
 	
