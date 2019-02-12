@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 19:08:42 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/09 22:24:05 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/12 19:18:18 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef	struct	s_render
 	SDL_Surface			*surface;
 	t_camera			cam;
 	t_ray				*rays; //in vector lib
+	double				specular;
 	int					light_nb;
 	t_light 			*light;
 	int					triangle_nb;
@@ -68,6 +69,6 @@ void				ray_cast(t_render *render);
 t_intersection				triangle_intersection(t_ray ray, t_triangle triangle);
 double				sphere_intersection(t_ray ray, t_sphere sphere);
 void				triangle_render(t_render *render);
-double				compute_lightning(t_render *render, t_vector P, t_vector N);
+double				compute_lightning(t_render *render, t_vector P, t_vector N, t_vector V);
 
 #endif

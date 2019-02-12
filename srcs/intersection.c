@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 15:16:01 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/11 18:51:18 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/12 20:45:56 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ double	sphere_intersection(t_ray ray, t_sphere sphere)
 	if (diskr < 0)
 		return (0);
 	double t1 = (-k2 + sqrt(diskr)) / (2 * k1);
-	double t2 = (-k2 + sqrt(diskr)) / (2 * k1);
+	double t2 = (-k2 - sqrt(diskr)) / (2 * k1);
 	if (t1 > t2)
 	{
 		double tmp = t1;
@@ -40,6 +40,7 @@ double	sphere_intersection(t_ray ray, t_sphere sphere)
 
 t_intersection			triangle_intersection(t_ray ray, t_triangle triangle)
 {
+	//plane intersection
 	t_vector			e1;
 	t_vector			e2;
 	t_vector			pvec;
@@ -58,12 +59,11 @@ t_intersection			triangle_intersection(t_ray ray, t_triangle triangle)
 		return (res);
 	det = 1 / det;
 	tvec = vector_sub(ray.origin, triangle.a);
-	res.u = dot_product(tvec, pvec) * det;
-	if (res.u < 0 || res.u > 1)
-		return (res);
+	res.u = fmod(dot_product(tvec, pvec) * det, 1.);
+	res.u < 0 ? res.u += 1 : 0;
 	qvec = cross_product(tvec, e1);
-	res.v = dot_product(ray.direction, qvec) * det;
-	if (res.v < 0 || res.u + res.v > 1)
-		return (res);	res.z = dot_product(e2, qvec) * det;
+	res.v = fmod(dot_product(ray.direction, qvec) * det, 1.);
+	res.v < 0 ? res.v += 1 : 0;
+	res.z = dot_product(e2, qvec) * det;
 	return (res);
 }

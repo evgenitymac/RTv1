@@ -6,7 +6,7 @@
 /*   By: jlucas-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:18:47 by jlucas-l          #+#    #+#             */
-/*   Updated: 2019/02/11 18:43:12 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/12 19:32:40 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct		s_sphere
 {
 	t_vector		center;
 	double			r;
+	double 		specular;
 }					t_sphere;
 
 typedef struct		s_triangle
