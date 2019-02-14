@@ -6,7 +6,7 @@
 /*   By: jlucas-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:18:47 by jlucas-l          #+#    #+#             */
-/*   Updated: 2019/02/12 19:32:40 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/14 18:05:36 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ typedef	struct	s_ray
 	t_vector	origin;
 	t_vector	direction;
 }				t_ray;
+
+typedef	struct		s_cylinder
+{
+	t_vector	center;
+	t_vector	direction;
+	double		r;
+	double 		specular;
+}					t_cylinder;
 
 typedef struct		s_sphere
 {

@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 15:16:01 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/12 20:45:56 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/14 19:25:43 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,32 @@ double	sphere_intersection(t_ray ray, t_sphere sphere)
 		return (-1.);
 	return (t1);
 }
+
+double		cylinder_intersection(t_ray ray, t_cylinder cylinder)
+{
+	t_vector e1 = cross_product(ray.direction, cylinder.direction);
+	t_vector e2 = vector_sub(ray.origin, cylinder.center);
+	t_vector e3 = cross_product(e2, cylinder.direction);
+	double k1 = dot_product(e1, e1);
+	double k2 = 2 * dot_product(e1, e3);
+	double k3 = dot_product(e3, e3) - cylinder.r * cylinder.r;
+	double diskr = k2 * k2 - 4 * k1 * k3;
+	if (diskr < 0)
+		return (0);
+	double t1 = (-k2 + sqrt(diskr)) / (2 * k1);
+	double t2 = (-k2 - sqrt(diskr)) / (2 * k1);
+	if (t1 > t2)
+	{
+		double tmp = t1;
+		t1 = t2;
+		t2 = tmp;
+	}
+	if (t1 < 0)
+		t1 = t2;
+	if (t1 < 0)
+		return (-1.);
+	return (t1);
+	}
 
 t_intersection			triangle_intersection(t_ray ray, t_triangle triangle)
 {

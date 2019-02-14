@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 17:02:54 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/12 21:35:15 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/14 19:22:30 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		get_color(int start, int end, double percent)
 	return (r << 16 | g << 8 | b);
 }
 
-void	triangle_render(t_render *render)
+void	start_render(t_render *render)
 {
 	int 			i;
 	int				t;
@@ -73,19 +73,44 @@ void	triangle_render(t_render *render)
 				else 
 					set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFFFF00, 0xFFFFFF, dli - 1));
 			}
-			double closest_t = sphere_intersection(render->rays[i], render->sphere[t]);
-			if (closest_t > 0. && closest_t < z)
+			t = -1;
+			while (++t < render->sphere_nb)
 			{
-				t_vector P = vector_sum(render->rays[i].origin, vector_scalar_multiply(render->rays[i].direction, closest_t));
-				t_vector N = vector_sub(P, render->sphere[t].center);
-				N = vector_normalize(N);
-				t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
-			//	V = vector_scalar_multiply(render->rays[i].direction, closest_t);
-				double dli = compute_lightning(render, P, N, V);
-				if (dli < 1)
-					set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, 0xFF0000, dli));
-				else 
-					set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFF0000, 0xFFFFFF, dli - 1));
+				double closest_t = sphere_intersection(render->rays[i], render->sphere[t]);
+				if (closest_t > 0. && closest_t < z)
+				{
+					t_vector P = vector_sum(render->rays[i].origin, vector_scalar_multiply(render->rays[i].direction, closest_t));
+					t_vector N = vector_sub(P, render->sphere[t].center);
+					N = vector_normalize(N);
+					t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
+				//	V = vector_scalar_multiply(render->rays[i].direction, closest_t);
+					double dli = compute_lightning(render, P, N, V);
+	//					if (dli > 2)
+	//						dli = 2;
+					if (dli < 1)
+						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, 0xFF0000, dli));
+					else 
+						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFF0000, 0xFFFFFF, dli - 1));
+				}
+			}
+			t = -1;
+			while (++t < render->cylinder_nb)
+			{
+				double closest_c = cylinder_intersection(render->rays[i], render->cylinder[t]);
+				if (closest_c > 0. && closest_c < z)
+				{
+					t_vector P = vector_sum(render->rays[i].origin, vector_scalar_multiply(render->rays[i].direction, closest_c));
+					t_vector N = vector_sub(P, render->sphere[t].center);
+					N = vector_normalize(N);
+					t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
+					double dli = compute_lightning(render, P, N, V);
+						//if (dli > 2)
+	//						dli = 2;
+					if (dli < 1)
+						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, 0xFF0000, dli));
+					else 
+						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFF0000, 0xFFFFFF, dli - 1));
+				}
 			}
 		}
 	}

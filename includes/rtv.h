@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 19:08:42 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/12 19:18:18 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/14 18:07:04 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef	struct	s_render
 	double				specular;
 	int					light_nb;
 	t_light 			*light;
+	int					cylinder_nb;
+	t_cylinder			*cylinder;
 	int					triangle_nb;
 	t_triangle			*triangle;
 	int					sphere_nb;
@@ -63,12 +65,12 @@ typedef	struct	s_render
 	int					win_height;
 }				t_render;
 
-void				sphere_render(t_render *render);
+double				cylinder_intersection(t_ray ray, t_cylinder cylinder);
+int					is_shadow(t_render *render, t_vector P, int j);
 void				init(t_render *render);
 void				ray_cast(t_render *render);
 t_intersection				triangle_intersection(t_ray ray, t_triangle triangle);
 double				sphere_intersection(t_ray ray, t_sphere sphere);
-void				triangle_render(t_render *render);
 double				compute_lightning(t_render *render, t_vector P, t_vector N, t_vector V);
-
+void				start_render(t_render *render);
 #endif

@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 16:41:14 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/12 19:43:14 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/13 21:11:10 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int		main()
 			render.win_height, SDL_WINDOW_RESIZABLE);
 	render.surface = SDL_GetWindowSurface(render.window);
 	init(&render);
-	triangle_render(&render);
-	//sphere_render(&render);
+	start_render(&render);
 	sdl_loop(&render);
 	SDL_DestroyWindow(render.window);
 	SDL_Quit();
