@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 17:02:54 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/14 19:22:30 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/14 19:45:08 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ void	start_render(t_render *render)
 						//if (dli > 2)
 	//						dli = 2;
 					if (dli < 1)
-						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, 0xFF0000, dli));
+						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, 0xFF0F00, dli));
 					else 
-						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFF0000, 0xFFFFFF, dli - 1));
+						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFF0F00, 0xFFFFFF, dli - 1));
 				}
 			}
 		}

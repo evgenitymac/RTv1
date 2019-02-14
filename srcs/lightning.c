@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 21:20:58 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/13 19:47:07 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/14 19:44:12 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int		is_shadow(t_render *render, t_vector P, int j)
 	while (++i < render->sphere_nb)
 	{
 		z = sphere_intersection(light_ray, render->sphere[i]);
-		if (z > 0 && z < ray_len - 1e-8 / render->sphere[i].r)
+		if (z > 0 && z < ray_len - 1e-8)
 			return (1);
 	}
 	i = -1;
-/*	while (i++ < render->triangle_nb)
+/*	while (++i < render->triangle_nb)
 	{
 		res = triangle_intersection(light_ray, render->triangle[i]);
 		if (res.z > 0 && res.z < ray_len - 1e-8)
@@ -42,6 +42,12 @@ int		is_shadow(t_render *render, t_vector P, int j)
 		
 	}
 	*/
+	while (++i < render->cylinder_nb)
+	{
+		z = cylinder_intersection(light_ray, render->cylinder[i]);
+		if (z > 0 && z < ray_len - 1e-8)
+			return (1);
+	}
 	return (0);
 }
 
@@ -60,7 +66,7 @@ double			compute_lightning(t_render *render, t_vector P, t_vector N, t_vector V)
 		n_dot_l = dot_product(N, L);
 		if (n_dot_l > 0)
 			i += render->light[j].intensity * n_dot_l / (vector_length(N) * vector_length(L));
-		if (render->sphere->specular != -1)
+		if (render->sphere->specular != -1 || render->cylinder->specular != -1)
 		{
 			t_vector R = vector_scalar_multiply(N, 2.0);
 			R = vector_scalar_multiply(R, dot_product(N, L));

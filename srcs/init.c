@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 19:12:39 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/14 19:21:20 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/14 19:41:52 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	init(t_render	*render)
 	render->cylinder[0].r = 9;
 	render->cylinder[0].center = (t_vector){40, 0, 0, 1};
 	render->cylinder[0].direction = (t_vector){0, 0, 1, 1};
+	render->cylinder[0].specular = 30;
 
 	render->light_nb = 1;
 	render->light = (t_light *)malloc(sizeof(t_light) * render->light_nb);
