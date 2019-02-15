@@ -6,30 +6,13 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 16:41:14 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/13 21:11:10 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 13:37:05 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/rtv.h"
+#include "rtv.h"
 
 
-void	ray_cast(t_render *render)
-{
-	int		i;
-
-	i =  -1;
-	while (++i < render->win_width * render->win_height)
-	{
-		render->rays[i].origin = render->cam.position;
-		render->rays[i].direction = vector_normalize((t_vector)
-				{
-				(i % render->win_width - render->win_width / 2),
-				 render->cam.focus,
-				 -(i / render->win_width - render->win_height / 2),
-				 0.
-				});
-	}
-}
 
 void	sdl_loop(t_render *render)
 {

@@ -1,46 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/08 17:02:54 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/14 19:45:08 by maheiden         ###   ########.fr       */
+/*   Created: 2019/02/15 13:15:48 by maheiden          #+#    #+#             */
+/*   Updated: 2019/02/15 13:52:38 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/rtv.h"
+#include "rtv.h"
 
-void	set_pixel(SDL_Surface *surface, int x, int y, unsigned int pixel)
+void	ray_cast(t_render *render)
 {
-	*((unsigned int *)(surface->pixels + y * surface->pitch + x * 4)) = pixel;
-}
+	int		i;
 
-void	clear_surface(SDL_Surface *surface)
-{
-	ft_bzero(surface->pixels, surface->h * surface->w * 4);
-}
-
-int		ft_lepri(int first, int second, double percent)
-{
-	if (first == second)
-		return (first);
-	return ((int)((double)first + (second - first) * percent));
-}
-
-int		get_color(int start, int end, double percent)
-{
-	int		r;
-	int		g;
-	int		b;
-
-	if (start == end)
-		return (start);
-	r = ft_lepri((start >> 16) & 0xFF, (end >> 16) & 0xFF, percent);
-	g = ft_lepri((start > 8) & 0xFF, (end >> 8) & 0xFF, percent);
-	b = ft_lepri((start) & 0xFF, (end) & 0xFF, percent);
-	return (r << 16 | g << 8 | b);
+	i =  -1;
+	while (++i < render->win_width * render->win_height)
+	{
+		render->rays[i].origin = render->cam.position;
+		render->rays[i].direction = vector_normalize((t_vector)
+				{
+				(i % render->win_width - render->win_width / 2),
+				 render->cam.focus,
+				 -(i / render->win_width - render->win_height / 2),
+				 0.
+				});
+	}
 }
 
 void	start_render(t_render *render)
@@ -73,44 +60,24 @@ void	start_render(t_render *render)
 				else 
 					set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFFFF00, 0xFFFFFF, dli - 1));
 			}
-			t = -1;
-			while (++t < render->sphere_nb)
+		}
+		t = -1;
+		while (++t < render->sphere_nb)
+		{
+			double closest_t = sphere_intersection(render->rays[i], render->sphere[t]);
+			if (closest_t > 0. && closest_t < z)
 			{
-				double closest_t = sphere_intersection(render->rays[i], render->sphere[t]);
-				if (closest_t > 0. && closest_t < z)
-				{
-					t_vector P = vector_sum(render->rays[i].origin, vector_scalar_multiply(render->rays[i].direction, closest_t));
-					t_vector N = vector_sub(P, render->sphere[t].center);
-					N = vector_normalize(N);
-					t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
-				//	V = vector_scalar_multiply(render->rays[i].direction, closest_t);
-					double dli = compute_lightning(render, P, N, V);
-	//					if (dli > 2)
-	//						dli = 2;
-					if (dli < 1)
-						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, 0xFF0000, dli));
-					else 
-						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFF0000, 0xFFFFFF, dli - 1));
-				}
-			}
-			t = -1;
-			while (++t < render->cylinder_nb)
-			{
-				double closest_c = cylinder_intersection(render->rays[i], render->cylinder[t]);
-				if (closest_c > 0. && closest_c < z)
-				{
-					t_vector P = vector_sum(render->rays[i].origin, vector_scalar_multiply(render->rays[i].direction, closest_c));
-					t_vector N = vector_sub(P, render->sphere[t].center);
-					N = vector_normalize(N);
-					t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
-					double dli = compute_lightning(render, P, N, V);
-						//if (dli > 2)
-	//						dli = 2;
-					if (dli < 1)
-						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, 0xFF0F00, dli));
-					else 
-						set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFF0F00, 0xFFFFFF, dli - 1));
-				}
+				t_vector P = vector_sum(render->rays[i].origin, vector_scalar_multiply(render->rays[i].direction, closest_t));
+				t_vector N = vector_sub(P, render->sphere[t].center);
+				N = vector_normalize(N);
+				t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
+				double dli = compute_lightning(render, P, N, V);
+	//				if (dli > 2)
+	//					dli = 2;
+				if (dli < 1)
+					set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, 0xFF0000, dli));
+				else 
+					set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFF0000, 0xFFFFFF, dli - 1));
 			}
 		}
 	}

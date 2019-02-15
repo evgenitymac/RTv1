@@ -6,12 +6,11 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 21:20:58 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/14 19:44:12 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 13:36:22 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/rtv.h"
-#include <stdio.h>
+#include "rtv.h"
 
 int		is_shadow(t_render *render, t_vector P, int j)
 {

@@ -6,11 +6,11 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 19:12:39 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/14 19:41:52 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 13:33:39 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/rtv.h"
+#include "rtv.h"
 
 void	init(t_render	*render)
 {
@@ -38,7 +38,7 @@ void	init(t_render	*render)
 	render->cylinder_nb = 1;
 	render->cylinder = (t_cylinder *)malloc(sizeof(t_cylinder) * render->cylinder_nb);
 	render->cylinder[0].r = 9;
-	render->cylinder[0].center = (t_vector){40, 0, 0, 1};
+	render->cylinder[0].center = (t_vector){140, 0, 0, 1};
 	render->cylinder[0].direction = (t_vector){0, 0, 1, 1};
 	render->cylinder[0].specular = 30;
 

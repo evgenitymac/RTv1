@@ -6,11 +6,11 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 15:16:01 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/14 19:25:43 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 13:34:52 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/rtv.h"
+#include "rtv.h"
 
 double	sphere_intersection(t_ray ray, t_sphere sphere)
 {
