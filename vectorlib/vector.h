@@ -6,7 +6,7 @@
 /*   By: jlucas-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:18:47 by jlucas-l          #+#    #+#             */
-/*   Updated: 2019/02/15 14:46:02 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 20:19:19 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef	struct		s_cylinder
 	t_vector	center;
 	t_vector	direction;
 	double		r;
+	double		h;
 	double 		specular;
 	int			color;
 }					t_cylinder;
@@ -62,6 +63,16 @@ typedef struct		s_triangle
 	double			specular;
 	int				color;
 }					t_triangle;
+
+typedef	struct		s_cone
+{
+	t_vector		tip;
+	t_vector		direction;
+	double 			angle;
+	double			h;
+	double			specular;
+	int				color;
+}					t_cone;
 
 t_matrix_4x4		matrix_multiply(t_matrix_4x4 a, t_matrix_4x4 b);
 t_matrix_4x4		identity_matrix();

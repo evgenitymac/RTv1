@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 19:08:42 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 15:31:36 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 21:31:29 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef	struct	s_render
 	t_triangle			*plane;
 	int					sphere_nb;
 	t_sphere			*sphere;
+	int					cone_nb;
+	t_cone				*cone;
 	int					win_width;
 	int					win_height;
 }				t_render;
@@ -80,8 +82,9 @@ void				init(t_render *render);
 
 //intersection.c
 double				sphere_intersection(t_ray ray, t_sphere sphere);
+double				cone_intersection(t_ray ray, t_cone cone);
 double				cylinder_intersection(t_ray ray, t_cylinder cylinder);
-t_intersection		plane_intersection(t_ray ray, t_triangle triangle);
+double				plane_intersection(t_ray ray, t_triangle triangle);
 
 //lightning.c
 int					is_shadow(t_render *render, t_vector P, int j);

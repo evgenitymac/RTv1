@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 14:07:33 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 14:11:39 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 21:57:35 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,53 +23,50 @@ double				sphere_intersection(t_ray ray, t_sphere sphere)
 	k1 = dot_product(ray.direction, ray.direction);
 	k2 = 2 * dot_product(oc, ray.direction);
 	k3 = dot_product(oc, oc) - sphere.r * sphere.r;
-	
 	return (quandratic_solve(k1,k2,k3));
 }
 
-double				cylinder_intersection(t_ray ray, t_cylinder cylinder)
+double				cone_intersection(t_ray ray, t_cone cone)
 {
-	t_vector 		e1;
-	t_vector		e2;
-	t_vector 		e3;
+	t_vector		co;
 	double			k1;
 	double			k2;
 	double			k3;
 
-	e1 = cross_product(ray.direction, cylinder.direction);
-	e2 = vector_sub(ray.origin, cylinder.center);
-	e3 = cross_product(e2, cylinder.direction);
-	k1 = dot_product(e1, e1);
-	k2 = 2 * dot_product(e1, e3);
-	k3 = dot_product(e3, e3) - cylinder.r * cylinder.r;
+	co = vector_sub(ray.origin, cone.tip);
+	k1 = dot_product(ray.direction, cone.direction) *
+		dot_product(ray.direction, cone.direction) - cos(cone.angle) * cos(cone.angle);
+	k2 = 2 * (dot_product(ray.direction, cone.direction) * dot_product(co, cone.direction)
+			- dot_product(ray.direction, co) * cos(cone.angle) * cos(cone.angle));
+	k3 = dot_product(co, cone.direction) * dot_product(co, cone.direction) - dot_product(co, co)
+		* cos(cone.angle) * cos(cone.angle);
 	return (quandratic_solve(k1, k2, k3));
 }
 
-t_intersection			plane_intersection(t_ray ray, t_triangle triangle)
+double				cylinder_intersection(t_ray ray, t_cylinder cylinder)
 {
-	t_vector			e1;
-	t_vector			e2;
-	t_vector			pvec;
-	t_vector			tvec;
-	t_vector			qvec;
-	t_intersection		res;
+	double			k1;
+	double			k2;
+	double			k3;
+
+	k1 = dot_product(cross_product(ray.direction, cylinder.direction),
+			cross_product(ray.direction, cylinder.direction));
+	k2 = 2 * dot_product(cross_product(ray.direction, cylinder.direction),
+			cross_product(vector_sub(ray.origin, cylinder.center), cylinder.direction));
+	k3 = dot_product(cross_product(vector_sub(ray.origin, cylinder.center), cylinder.direction),
+			cross_product(vector_sub(ray.origin, cylinder.center), cylinder.direction)) - cylinder.r * cylinder.r;
+	return (quandratic_solve(k1, k2, k3));
+}
+
+double				plane_intersection(t_ray ray, t_triangle triangle)
+{
 	double				det;
 
-
-	res = (t_intersection){0, 0, 0};
-	e1 = vector_sub(triangle.a, triangle.b);
-	e2 = vector_sub(triangle.c, triangle.a);
-	pvec = cross_product(ray.direction, e2);
-	det = dot_product(e1, pvec);
+	det = dot_product(vector_sub(triangle.a, triangle.b),
+			cross_product(ray.direction, vector_sub(triangle.c, triangle.a)));
 	if (det < 1e-8 && det > -1e-8)
-		return (res);
-	det = 1 / det;
-	tvec = vector_sub(ray.origin, triangle.a);
-	res.u = fmod(dot_product(tvec, pvec) * det, 1.);
-	res.u < 0 ? res.u += 1 : 0;
-	qvec = cross_product(tvec, e1);
-	res.v = fmod(dot_product(ray.direction, qvec) * det, 1.);
-	res.v < 0 ? res.v += 1 : 0;
-	res.z = dot_product(e2, qvec) * det;
-	return (res);
+		return (0);
+	det = dot_product(vector_sub(triangle.c, triangle.a),
+			cross_product(vector_sub(ray.origin, triangle.a), vector_sub(triangle.a, triangle.b))) * (1 / det);
+	return (det);
 }

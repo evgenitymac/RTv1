@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 16:41:14 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 13:37:05 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 21:19:31 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	sdl_loop(t_render *render)
 	}
 }
 
+//add events
 
 int		main()
 {

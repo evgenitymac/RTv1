@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 21:20:58 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 15:29:30 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 21:58:59 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ static	int			shadow_figure_iteration(t_render *render, t_ray light_ray, double r
 	while (++i < render->sphere_nb)
 	{
 		z = sphere_intersection(light_ray, render->sphere[i]);
+		if (z > 0 && z < ray_len - 1e-8)
+			return (1);
+	}
+	i = -1;
+	while (++i < render->cone_nb)
+	{
+		z = cone_intersection(light_ray, render->cone[i]);
 		if (z > 0 && z < ray_len - 1e-8)
 			return (1);
 	}
@@ -63,14 +70,15 @@ double			compute_lightning(t_render *render, t_vector P, t_vector N, t_vector V)
 		dot = dot_product(N, L);
 		if (dot > 0)
 			i += render->light[j].intensity * dot / (vector_length(N) * vector_length(L));
-		if (render->sphere->specular != -1 || render->cylinder->specular != -1)
+		if (1) //render->sphere->specular != -1 || render->cylinder->specular != -1)
 		{
 			t_vector R = vector_scalar_multiply(N, 2.0);
 			R = vector_scalar_multiply(R, dot_product(N, L));
 			R = vector_sub(R, L);
 			dot = dot_product(R, V);
 			if (dot > 0)
-				i+= render->light[j].intensity * pow((dot / (vector_length(R) * vector_length(V))), render->sphere->specular);
+				i+= render->light[j].intensity * pow((dot / (vector_length(R) * vector_length(V))), 50 /*specular*/);
+			//trouble with usage only one primitive specular param
 		}
 		j++;
 	}

@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 14:07:19 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 15:31:39 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 21:57:05 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,17 @@ void	ray_cast(t_render *render)
 	}
 }
 
-
 void	dli_pixel(t_render *render, double dli, int i, int color)
 {
-	if (dli < 1)
+	if (dli > 2.)
+		dli = 2.;
+	if (dli <= 1)
 		set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, color, dli));
-	else
+	else	
 		set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(color , 0xFFFFFF, dli - 1));
 }
 
+//this need to give back two values t1 and t0;
 double				quandratic_solve(double k1, double k2, double k3)
 {
 	double 			diskr;
