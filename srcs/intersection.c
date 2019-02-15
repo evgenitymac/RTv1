@@ -1,41 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   triangle_intersetction.c                           :+:      :+:    :+:   */
+/*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/09 15:16:01 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 14:03:58 by maheiden         ###   ########.fr       */
+/*   Created: 2019/02/15 14:07:33 by maheiden          #+#    #+#             */
+/*   Updated: 2019/02/15 14:11:39 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv.h"
-
-double				quandratic_solve(double k1, double k2, double k3)
-{
-	double 			diskr;
-	double			t1;
-	double			t2;
-	double			tmp;
-
-	diskr = k2 * k2 - 4 * k1 * k3;
-	if (diskr < 0)
-		return (0);
-	t1 = (-k2 + sqrt(diskr)) / (2 * k1);
-	t2 = (-k2 - sqrt(diskr)) / (2 * k1);
-	if (t1 > t2)
-	{
-		tmp = t1;
-		t1 = t2;
-		t2 = tmp;
-	}
-	if (t1 < 0)
-		t1 = t2;
-	if (t1 < 0)
-		return (-1.);
-	return (t1);
-}
 
 double				sphere_intersection(t_ray ray, t_sphere sphere)
 {
@@ -70,9 +45,8 @@ double				cylinder_intersection(t_ray ray, t_cylinder cylinder)
 	return (quandratic_solve(k1, k2, k3));
 }
 
-t_intersection			triangle_intersection(t_ray ray, t_triangle triangle)
+t_intersection			plane_intersection(t_ray ray, t_triangle triangle)
 {
-	//plane intersection
 	t_vector			e1;
 	t_vector			e2;
 	t_vector			pvec;

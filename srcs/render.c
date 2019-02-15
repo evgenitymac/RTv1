@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:15:48 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 13:52:38 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 14:14:21 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	start_render(t_render *render)
 	{
 		t = -1;
 		z = 1. / 0.;
-		while (++t < render->triangle_nb)
+		while (++t < render->plane_nb)
 		{
-			bct = triangle_intersection(render->rays[i], render->triangle[t]);
+			bct = plane_intersection(render->rays[i], render->plane[t]);
 			if (bct.z > 0 && bct.z < z)
 			{
 				z = bct.z;
 				t_vector P = vector_sum(render->rays[i].origin, vector_scalar_multiply(render->rays[i].direction, z));
-				t_vector N = cross_product(vector_sub(render->triangle[t].b, render->triangle[t].a), vector_sub(render->triangle[t].c, render->triangle[t].a));
+				t_vector N = cross_product(vector_sub(render->plane[t].b, render->plane[t].a), vector_sub(render->plane[t].c, render->plane[t].a));
 				N = vector_normalize(N);
 				if (dot_product(render->rays[i].direction, N) > 0)
 					N = vector_scalar_multiply(N, -1);
