@@ -6,28 +6,27 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 15:16:01 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 13:34:52 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 14:03:58 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv.h"
 
-double	sphere_intersection(t_ray ray, t_sphere sphere)
+double				quandratic_solve(double k1, double k2, double k3)
 {
-	t_vector 		oc;
+	double 			diskr;
+	double			t1;
+	double			t2;
+	double			tmp;
 
-	oc = vector_sub(ray.origin, sphere.center);
-	double k1 = dot_product(ray.direction, ray.direction);
-	double k2 = 2 * dot_product(oc, ray.direction);
-	double k3 = dot_product(oc, oc) - sphere.r * sphere.r;
-	double diskr = k2 * k2 - 4 * k1 * k3;
+	diskr = k2 * k2 - 4 * k1 * k3;
 	if (diskr < 0)
 		return (0);
-	double t1 = (-k2 + sqrt(diskr)) / (2 * k1);
-	double t2 = (-k2 - sqrt(diskr)) / (2 * k1);
+	t1 = (-k2 + sqrt(diskr)) / (2 * k1);
+	t2 = (-k2 - sqrt(diskr)) / (2 * k1);
 	if (t1 > t2)
 	{
-		double tmp = t1;
+		tmp = t1;
 		t1 = t2;
 		t2 = tmp;
 	}
@@ -38,31 +37,38 @@ double	sphere_intersection(t_ray ray, t_sphere sphere)
 	return (t1);
 }
 
-double		cylinder_intersection(t_ray ray, t_cylinder cylinder)
+double				sphere_intersection(t_ray ray, t_sphere sphere)
 {
-	t_vector e1 = cross_product(ray.direction, cylinder.direction);
-	t_vector e2 = vector_sub(ray.origin, cylinder.center);
-	t_vector e3 = cross_product(e2, cylinder.direction);
-	double k1 = dot_product(e1, e1);
-	double k2 = 2 * dot_product(e1, e3);
-	double k3 = dot_product(e3, e3) - cylinder.r * cylinder.r;
-	double diskr = k2 * k2 - 4 * k1 * k3;
-	if (diskr < 0)
-		return (0);
-	double t1 = (-k2 + sqrt(diskr)) / (2 * k1);
-	double t2 = (-k2 - sqrt(diskr)) / (2 * k1);
-	if (t1 > t2)
-	{
-		double tmp = t1;
-		t1 = t2;
-		t2 = tmp;
-	}
-	if (t1 < 0)
-		t1 = t2;
-	if (t1 < 0)
-		return (-1.);
-	return (t1);
-	}
+	t_vector 		oc;
+	double			k1;
+	double			k2;
+	double			k3;
+
+	oc = vector_sub(ray.origin, sphere.center);
+	k1 = dot_product(ray.direction, ray.direction);
+	k2 = 2 * dot_product(oc, ray.direction);
+	k3 = dot_product(oc, oc) - sphere.r * sphere.r;
+	
+	return (quandratic_solve(k1,k2,k3));
+}
+
+double				cylinder_intersection(t_ray ray, t_cylinder cylinder)
+{
+	t_vector 		e1;
+	t_vector		e2;
+	t_vector 		e3;
+	double			k1;
+	double			k2;
+	double			k3;
+
+	e1 = cross_product(ray.direction, cylinder.direction);
+	e2 = vector_sub(ray.origin, cylinder.center);
+	e3 = cross_product(e2, cylinder.direction);
+	k1 = dot_product(e1, e1);
+	k2 = 2 * dot_product(e1, e3);
+	k3 = dot_product(e3, e3) - cylinder.r * cylinder.r;
+	return (quandratic_solve(k1, k2, k3));
+}
 
 t_intersection			triangle_intersection(t_ray ray, t_triangle triangle)
 {
