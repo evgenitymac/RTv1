@@ -6,29 +6,12 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:15:48 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 14:15:52 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 15:30:33 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv.h"
 
-void	ray_cast(t_render *render)
-{
-	int		i;
-
-	i =  -1;
-	while (++i < render->win_width * render->win_height)
-	{
-		render->rays[i].origin = render->cam.position;
-		render->rays[i].direction = vector_normalize((t_vector)
-				{
-				(i % render->win_width - render->win_width / 2),
-				 render->cam.focus,
-				 -(i / render->win_width - render->win_height / 2),
-				 0.
-				});
-	}
-}
 
 void	start_render(t_render *render)
 {
@@ -54,11 +37,7 @@ void	start_render(t_render *render)
 				N = vector_normalize(N);
 				if (dot_product(render->rays[i].direction, N) > 0)
 					N = vector_scalar_multiply(N, -1);
-				double dli = compute_lightning(render, P, N, (t_vector){0, 0, 0, 0});
-				if (dli < 1)
-					set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, 0xFFFF00, dli));
-				else 
-					set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFFFF00, 0xFFFFFF, dli - 1));
+				dli_pixel(render, compute_lightning(render, P, N, (t_vector){0, 0, 0, 0}), i, render->plane[t].color);
 			}
 		}
 		t = -1;
@@ -71,13 +50,7 @@ void	start_render(t_render *render)
 				t_vector N = vector_sub(P, render->sphere[t].center);
 				N = vector_normalize(N);
 				t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
-				double dli = compute_lightning(render, P, N, V);
-	//				if (dli > 2)
-	//					dli = 2;
-				if (dli < 1)
-					set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0x0, 0xFF0000, dli));
-				else 
-					set_pixel(render->surface, i % render->win_width, i / render->win_width, get_color(0xFF0000, 0xFFFFFF, dli - 1));
+				dli_pixel(render, compute_lightning(render, P, N, V), i, render->sphere[t].color);
 			}
 		}
 	}

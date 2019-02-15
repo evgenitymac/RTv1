@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 19:08:42 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 14:24:49 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/15 15:31:36 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ typedef	struct	s_render
 }				t_render;
 
 //additional.c
+void				ray_cast(t_render *render);
+void				dli_pixel(t_render *render, double dli, int i, int color);
 double				quandratic_solve(double k1, double k2, double k3);
 
 //image.c
@@ -86,7 +88,6 @@ int					is_shadow(t_render *render, t_vector P, int j);
 double				compute_lightning(t_render *render, t_vector P, t_vector N, t_vector V);
 
 //render.c 
-void				ray_cast(t_render *render);
 void				start_render(t_render *render);
 
 #endif
