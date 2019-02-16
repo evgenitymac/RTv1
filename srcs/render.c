@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 18:01:57 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 21:56:00 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/16 19:55:32 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	start_render(t_render *render)
 				t_vector P = vector_sum(render->rays[i].origin, vector_scalar_multiply(render->rays[i].direction, closest_p));
 				t_vector N = cross_product(vector_sub(render->plane[t].b, render->plane[t].a), vector_sub(render->plane[t].c, render->plane[t].a));
 				N = vector_normalize(N);
-				if (dot_product(render->rays[i].direction, N) > 0)
-					N = vector_scalar_multiply(N, -1);
+		//		if (dot_product(render->rays[i].direction, N) > 0)
+		//			N = vector_scalar_multiply(N, -1);
 				t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
 				dli_pixel(render, compute_lightning(render, P, N, V), i, render->plane[t].color);
 			}
@@ -59,9 +59,7 @@ void	start_render(t_render *render)
 			if (closest_c > 0. && closest_c < z)
 			{
 				t_vector P = vector_sum(render->rays[i].origin, vector_scalar_multiply(render->rays[i].direction, closest_c));
-				t_vector N = vector_sub(P, render->cylinder[t].center);
-				N = cross_product(N, render->cylinder[t].direction);
-				N = vector_normalize(cross_product(render->cylinder[t].center, N));
+				t_vector N = vector_normalize(cross_product(cross_product(vector_sub(P, render->cylinder[t].center), render->cylinder[t].direction), render->cylinder[t].direction));
 				t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
 				if (dot_product(N, render->rays[i].direction) > 0)
 						N = vector_scalar_multiply(N, -1);
@@ -74,15 +72,18 @@ void	start_render(t_render *render)
 			double closest_co = cone_intersection(render->rays[i], render->cone[t]);
 			if (closest_co > 0. && closest_co < z)
 			{
+				t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
 				t_vector P = vector_sum(render->rays[i].origin, vector_scalar_multiply(render->rays[i].direction, closest_co));
 				double len = vector_length(vector_sub(P, render->cone[t].tip));
+				if (dot_product(vector_sub(render->cone[t].tip, P), render->cone[t].direction) > 0)
+				{
+					V = vector_scalar_multiply(render->rays[i].direction, -1);
+					len *= -1;
+				}
 				t_vector C = vector_sum(render->cone[t].tip, vector_scalar_multiply(render->cone[t].direction, len));
 				t_vector N = vector_normalize(vector_sub(P, C));
-				
-				//t_vector N = vector_normalize(vector_sub(P, vector_sum(render->cone[t].tip, vector_scalar_multiply(render->cone[t].direction, vector_length(vector_sub(P, render->cone[t].tip)) / cos(render->cone[t].angle)))));
-				
-
-				t_vector V = vector_scalar_multiply(render->rays[i].direction, -1);
+				if (dot_product(N, render->rays[i].direction) > 0)
+						N = vector_scalar_multiply(N, -1);
 				dli_pixel(render, compute_lightning(render, P, N, V), i, render->cone[t].color);
 			}
 		}

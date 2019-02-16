@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 17:02:54 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 21:18:46 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/16 18:24:29 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int		get_color(int start, int end, double percent)
 	if (start == end)
 		return (start);
 	r = ft_lepri((start >> 16) & 0xFF, (end >> 16) & 0xFF, percent);
-	g = ft_lepri((start > 8) & 0xFF, (end >> 8) & 0xFF, percent);
+	g = ft_lepri((start >> 8) & 0xFF, (end >> 8) & 0xFF, percent);
 	b = ft_lepri((start) & 0xFF, (end) & 0xFF, percent);
 	return (r << 16 | g << 8 | b);
 }
-

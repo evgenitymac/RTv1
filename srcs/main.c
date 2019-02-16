@@ -6,17 +6,15 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 16:41:14 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 21:19:31 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/16 17:44:02 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv.h"
 
-
-
-void	sdl_loop(t_render *render)
+void			sdl_loop(t_render *render)
 {
-	int		quit;
+	int			quit;
 
 	quit = 0;
 	while (!quit)
@@ -25,18 +23,18 @@ void	sdl_loop(t_render *render)
 		{
 			if (render->event.type == SDL_QUIT)
 				quit = 1;
+			if (render->event.type == SDL_KEYDOWN)
+				keyboard(render, &quit);
 			//if (render->event.window.event = SDL_WINDOWEVENT_RESIZED)
 			//	resize_sdl(render);
 		}
 	}
 }
 
-//add events
-
-int		main()
+int				main(void)
 {
 	t_render	render;
-	
+
 	render.win_width = 1280;
 	render.win_height = 720;
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);

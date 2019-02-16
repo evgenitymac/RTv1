@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 19:08:42 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/15 21:31:29 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/16 17:36:02 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef	struct	s_camera
 	t_vector		position;
 	double				vert;
 	double				hor;
-	double				focus;
+	double			focus;
 }					t_camera;
 
 typedef	struct	s_ray
@@ -51,7 +51,6 @@ typedef	struct	s_render
 	SDL_Surface			*surface;
 	t_camera			cam;
 	t_ray				*rays;
-	double				specular;
 	int					light_nb;
 	t_light 			*light;
 	int					cylinder_nb;
@@ -70,6 +69,9 @@ typedef	struct	s_render
 void				ray_cast(t_render *render);
 void				dli_pixel(t_render *render, double dli, int i, int color);
 double				quandratic_solve(double k1, double k2, double k3);
+
+//event.c
+void				keyboard(t_render	*render, int *quit);
 
 //image.c
 void				set_pixel(SDL_Surface *surface, int x, int y, unsigned int pixel);
