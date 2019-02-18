@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 19:08:42 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/16 17:36:02 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/18 21:25:26 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,6 @@ typedef struct	s_light
 	double		intensity;
 }				t_light;
 
-typedef	struct	s_intersection
-{
-	double			u;
-	double			v;
-	double			z;
-}				t_intersection;
-
 typedef	struct	s_render
 {
 	SDL_Window			*window;
@@ -61,12 +54,15 @@ typedef	struct	s_render
 	t_sphere			*sphere;
 	int					cone_nb;
 	t_cone				*cone;
+	double				closest;
 	int					win_width;
 	int					win_height;
 }				t_render;
 
 //additional.c
 void				ray_cast(t_render *render);
+t_vector			cone_normalize(t_vector point, t_cone cone);
+t_vector			normalize_init_helper(t_render *render, t_vector point, int type, int t);
 void				dli_pixel(t_render *render, double dli, int i, int color);
 double				quandratic_solve(double k1, double k2, double k3);
 
