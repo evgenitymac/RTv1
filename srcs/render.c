@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 18:01:57 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/18 21:34:01 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/18 22:01:37 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,21 @@ static	void	normilize(t_render *render, int type, int i, int t)
 	normal = normalize_init_helper(render, point, type, t);
 	if (dot_product(render->rays[i].direction, normal) > 0)
 		normal = vector_scalar_multiply(normal, -1);
+	t = 0;
 	dli_pixel(render, compute_lightning(render, point, normal, redirection), i,
 			color);
 }
+
+static	bool	is_any_figure_closer(t_render *render, double cache)
+{
+	if (cache > 0 && cache < render->closest)
+	{
+		render->closest = cache;
+		return (1);
+	}
+	return (0);
+}
+
 
 void	start_render(t_render *render)
 {
@@ -67,44 +79,20 @@ void	start_render(t_render *render)
 		t = -1;
 		render->closest = 1. / 0.;
 		while (++t < render->plane_nb)
-		{
-			double closest_p = plane_intersection(render->rays[i], render->plane[t]);
-			if (closest_p > 0 && closest_p < render->closest)
-			{
-				render->closest = closest_p;
-				normilize(render, 0, i, t);
-			}
-		}
+			is_any_figure_closer(render, plane_intersection(render->rays[i],
+						render->plane[t])) ? normilize(render, 0, i, t) : 0;
 		t = -1;
 		while (++t < render->sphere_nb)
-		{
-			double closest_t = sphere_intersection(render->rays[i], render->sphere[t]);
-			if (closest_t > 0. && closest_t < render->closest)
-			{
-				render->closest = closest_t;
-				normilize(render, 1, i, t);
-			}
-		}
+			is_any_figure_closer(render, sphere_intersection(render->rays[i],
+						render->sphere[t])) ? normilize(render, 1, i, t) : 0;
 		t = -1;
 		while (++t < render->cylinder_nb)
-		{
-			double closest_c = cylinder_intersection(render->rays[i], render->cylinder[t]);
-			if (closest_c > 0. && closest_c < render->closest)
-			{
-				render->closest = closest_c;
-				normilize(render, 2, i, t);
-			}
-		}
+			is_any_figure_closer(render, cylinder_intersection(render->rays[i],
+						render->cylinder[t])) ? normilize(render, 2 ,i ,t) : 0;
 		t = -1;
 		while (++t < render->cone_nb)
-		{
-			double closest_co = cone_intersection(render->rays[i], render->cone[t]);
-			if (closest_co > 0. && closest_co < render->closest)
-			{
-				render->closest = closest_co;
-				normilize(render, 3, i, t);
-			}
-		}
+			is_any_figure_closer(render, cone_intersection(render->rays[i],
+						render->cone[t])) ? normilize(render, 3, i, t) : 0;
 	}
 	SDL_UpdateWindowSurface(render->window);
 }
