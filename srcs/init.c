@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 19:12:39 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/16 20:40:40 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/19 15:32:29 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ void	init(t_render	*render)
 	render->plane[0].b = (t_vector){10, 0 , 0 , 1};
  	render->plane[0].c = (t_vector) {0, 10, 0, 1};
 	render->plane[0].color = 0xFF0000;
+	render->plane[0].specular = 50;
 	
-	// problem with color 0xFF0000 0xFFFF00;
-
 	render->sphere_nb = 2;
 	render->sphere = (t_sphere *)malloc(sizeof(t_sphere) * render->sphere_nb);
 	render->sphere[0].center = (t_vector){0, 0, 0, 1};

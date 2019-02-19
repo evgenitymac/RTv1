@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 14:07:33 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/18 16:56:11 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/19 18:31:52 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ double				cylinder_intersection(t_ray ray, t_cylinder cylinder)
 	double			k1;
 	double			k2;
 	double			k3;
-	
+
 	k1 = dot_product(cross_product(ray.direction, cylinder.direction),
 			cross_product(ray.direction, cylinder.direction));
 	k2 = 2 * dot_product(cross_product(ray.direction, cylinder.direction),

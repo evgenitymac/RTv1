@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 19:08:42 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/18 21:25:26 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/19 18:08:32 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ typedef struct	s_light
 	double		intensity;
 }				t_light;
 
+typedef	struct	s_cache_vectrors
+{
+	t_vector		point;
+	t_vector		normal;
+	t_vector		redirection;
+}				t_cache_vectors;				
+
 typedef	struct	s_render
 {
 	SDL_Window			*window;
@@ -66,6 +73,7 @@ t_vector			normalize_init_helper(t_render *render, t_vector point, int type, int
 void				dli_pixel(t_render *render, double dli, int i, int color);
 double				quandratic_solve(double k1, double k2, double k3);
 
+
 //event.c
 void				keyboard(t_render	*render, int *quit);
 
@@ -84,9 +92,16 @@ double				cone_intersection(t_ray ray, t_cone cone);
 double				cylinder_intersection(t_ray ray, t_cylinder cylinder);
 double				plane_intersection(t_ray ray, t_triangle triangle);
 
+//light_caclulation.c
+int					is_shadow(t_render *render, t_vector point, int j);
+double				specular_dot(t_cache_vectors *vectors, t_vector light_vector);
+double				light_intense_giver(t_cache_vectors *vectors, t_vector light_vector, t_light light);
+double				glare_intense_giver(t_cache_vectors *vectors, t_vector light_vector, t_light lihgt, double specular);
+
 //lightning.c
+int					shadow_figure_iteration(t_render *render, t_ray light_ray, double ray_len);
 int					is_shadow(t_render *render, t_vector P, int j);
-double				compute_lightning(t_render *render, t_vector P, t_vector N, t_vector V);
+double				compute_lightning(t_render *render, t_cache_vectors *vectors, double specular);
 
 //render.c 
 void				start_render(t_render *render);

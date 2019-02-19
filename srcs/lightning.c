@@ -6,18 +6,41 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 21:20:58 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/18 17:01:04 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/19 19:04:58 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv.h"
 
-static	int			shadow_figure_iteration(t_render *render, t_ray light_ray, double ray_len)
+int					shadow_figure_iteration_second(t_render *render,
+		t_ray light_ray, double ray_len, double z)
 {
-	int		i;
-	double	z;
+	int				i;
 
 	i = -1;
+	while (++i < render->cone_nb)
+	{
+		z = cone_intersection(light_ray, render->cone[i]);
+		if (z > 0 && z < ray_len - 1e-8)
+			return (1);
+	}
+	while (++i < render->cone_nb)
+	{
+		z = cone_intersection(light_ray, render->cone[i]);
+		if (z > 0 && z < ray_len - 1e-8)
+			return (1);
+	}
+	return (0);
+}
+
+int					shadow_figure_iteration(t_render *render,
+		t_ray light_ray, double ray_len)
+{
+	int				i;
+	double			z;
+
+	i = -1;
+	z = 0;
 	while (++i < render->cylinder_nb)
 	{
 		z = cylinder_intersection(light_ray, render->cylinder[i]);
@@ -31,56 +54,29 @@ static	int			shadow_figure_iteration(t_render *render, t_ray light_ray, double r
 		if (z > 0 && z < ray_len - 1e-8)
 			return (1);
 	}
-	i = -1;
-	while (++i < render->cone_nb)
-	{
-		z = cone_intersection(light_ray, render->cone[i]);
-		if (z > 0 && z < ray_len - 1e-8)
-			return (1);
-	}
-	return (0);
+	return (shadow_figure_iteration_second(render, light_ray, ray_len, z));
 }
 
-
-int		is_shadow(t_render *render, t_vector P, int j)
+double				compute_lightning(t_render *render,
+		t_cache_vectors *vectors, double specular)
 {
-	t_vector			light_dir;
-	t_ray				light_ray;
-	double 				ray_len;
+	t_vector		light_vector;
+	double			intensivity;
+	int				j;
 
-	light_dir = vector_sub(P, render->light[j].position);
-	ray_len = vector_length(light_dir);
-	light_ray.origin = render->light[j].position;
-	light_ray.direction = vector_normalize(light_dir);
-	return (shadow_figure_iteration(render, light_ray, ray_len));
-}
-
-double			compute_lightning(t_render *render, t_vector P, t_vector N, t_vector V)
-{
-	t_vector		L;
-	double 		i = 0.0;
-	int			j = 0;
-	double		dot;
-
-	while (j < render->light_nb)
+	intensivity = 0;
+	j = -1;
+	while (++j < render->light_nb)
 	{
-		if (is_shadow(render, P, j) != 0)
-			break;
-		L = vector_normalize(vector_sub(render->light[j].position, P));
-		dot = dot_product(N, L);
-		if (dot > 0)
-			i += render->light[j].intensity * dot / (vector_length(N) * vector_length(L));
-		if (1) //render->sphere->specular != -1 || render->cylinder->specular != -1)
-		{
-			t_vector R = vector_scalar_multiply(N, 2.0);
-			R = vector_scalar_multiply(R, dot_product(N, L));
-			R = vector_sub(R, L);
-			dot = dot_product(R, V);
-			if (dot > 0)
-				i+= render->light[j].intensity * pow((dot / (vector_length(R) * vector_length(V))), 50 /*specular*/);
-			//trouble with usage only one primitive specular param
-		}
-		j++;
+		if (is_shadow(render, vectors->point, j) != 0)
+			break ;
+		light_vector = vector_normalize(vector_sub(
+					render->light[j].position, vectors->point));
+		intensivity += light_intense_giver(vectors, light_vector,
+				render->light[j]);
+		if (specular != 0)
+			intensivity += glare_intense_giver(vectors, light_vector,
+					render->light[j], specular);
 	}
-	return (i);
+	return (intensivity);
 }
