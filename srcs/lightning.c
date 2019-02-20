@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 21:20:58 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/19 19:04:58 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/20 17:52:07 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ double				compute_lightning(t_render *render,
 					render->light[j].position, vectors->point));
 		intensivity += light_intense_giver(vectors, light_vector,
 				render->light[j]);
-		if (specular != 0)
+		if (specular >= 1)
 			intensivity += glare_intense_giver(vectors, light_vector,
 					render->light[j], specular);
 	}
