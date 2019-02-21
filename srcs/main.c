@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 16:41:14 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/20 19:16:37 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/21 20:10:05 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,13 @@ void			sdl_loop(t_render *render)
 
 int				main(int argc, char **argv)
 {
-	
 	t_render	render;
-	int 		fd;
 
 	display_error(argc != 2, "where is file mazafaka");
-	fd = open(argv[argc -1], O_RDONLY);
 	render.win_width = 1280;
 	render.win_height = 720;
-	parse(fd, &render);
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	parse(argv[argc - 1], &render);
+/*	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	render.window = SDL_CreateWindow("RT", SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED, render.win_width,
 			render.win_height, SDL_WINDOW_RESIZABLE);
@@ -61,5 +58,6 @@ int				main(int argc, char **argv)
 	sdl_loop(&render);
 	SDL_DestroyWindow(render.window);
 	SDL_Quit();
+	*/
 	return (0);
 }

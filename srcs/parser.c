@@ -6,112 +6,66 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 18:18:13 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/20 21:36:58 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/21 21:19:35 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv.h"
 
-//if fd is empty folder
-
-void	allocate_objects(t_render *render)
-{
-	render->rays = (t_ray *)malloc(sizeof(t_ray) * render->win_width * render->win_height);
-	render->plane = (t_triangle *)malloc(sizeof(t_triangle) * render->plane_nb);
-	render->sphere = (t_sphere *)malloc(sizeof(t_sphere) * render->sphere_nb);
-	render->cylinder = (t_cylinder *)malloc(sizeof(t_cylinder) * render->cylinder_nb);
-	render->cone = (t_cone *)malloc(sizeof(t_cone) * render->cone_nb);
-	render->light = (t_light *)malloc(sizeof(t_light) * render->light_nb);
-}
-
-
-
-void	count_objects(int fd, t_render *render)
-{
-	char *line;
-
-	render->plane_nb = 0;
-	render->sphere_nb = 0;
-	render->cylinder_nb = 0;
-	render->cone_nb = 0;
-	render->light_nb = 0;
-
-	while (get_next_line(fd, &line))
-	{
-		if (ft_strstr(line, "/plane") != 0)
-			render->plane_nb++;
-		if (ft_strstr(line, "/sphere") != 0)
-			render->sphere_nb++;
-		if (ft_strstr(line, "/cylinder") != 0)
-			render->cylinder_nb++;
-		if (ft_strstr(line, "/cone") != 0)
-			render->cone_nb++;
-		if (ft_strstr(line, "/light") != 0)
-			render->light_nb++;
-		ft_strdel(&line);
-	}
-}
-/*
-t_vector	parse_vector(char *str)
-{
-	t_vector vector;
-	int i = 0;
-	
-	vector = (t_vector){0, 0, 0, 1};
-	while (*str)
-	{
-		str++;
-	}
-	return (vector);
-*/
-
-void	parse_atribut(char *str, t_render *render)
+bool	start_finish_ok(char *str)
 {
 	int i = 0;
-	if (ft_strn(str, "color") != 0)
+	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t')
+		i++;
+	if (str[i] == '{')
+		return (1);
+	return (0);
+}
+
+bool	brackets_count(char *str)
+{
+	int  brackets = 0;
+	int  braces = 0;
+	int  i = 0;
+
+	while (str[i])
 	{
-		while (*str)
-		{
-			if (*str == '=')
-			{
-				str++;
-				render->planeft_atoi(*str);
-			}
-			i++;
-		}	
+		if (str[i] == '{')
+			brackets++;
+		if (str[i] == '}')
+			brackets--;
+		if (str[i] == '[')
+			braces++;
+		if (str[i] == ']')
+			braces--;
+		i++;
 	}
-
-
+	if (brackets == 0 && braces == 0)
+		return (1);
+	return (0);
 }
 
-void	parse_object(int fd, t_render *render)
+#include <stdio.h>
+int		characters_in_file(char *name)
 {
-	char *line;
-	while (get_next_line(fd, &line))
-	{
-		if (ft_strnequ(line, "/plane", ft_strlen("/plane")) == 0)
-		{
-			ft_strdel(line);
-			while (get_next_line(fd, &line))
-			{
-				if ((ft_strchr(line, '\\') != 0));
-				{
-					ft_strdel(line);
-					break;
-				}
-				parse_atribut(line);
-			 ft_strdel(line)
-			}	
-		}
-		ft_strdel(line);
-	}	
+	int		fd = open(name, O_RDONLY);
+	char buff[1];
+	int	 count = 0;
+	while (read(fd, buff, 1) > 0)
+		count++;
+	close(fd);	
+	return (count);
 }
-*/
-void	parse(int fd, t_render *render)
-{
-	count_objects(fd, render);
-	allocate_objects(render);
-	close(fd);
-	parse_object(fd, render);
 
+void	parse(char *name, t_render *render)
+{
+	int		count = characters_in_file(name);
+	char	buff[count];
+	int		fd = open(name, O_RDONLY);
+	read(fd, buff, count);
+	if (brackets_count(buff) && start_finish_ok(buff))
+		ft_putnbr(1);
+	else
+		ft_putnbr(0);
+	render->plane_nb++;
 }

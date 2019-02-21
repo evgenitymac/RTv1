@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 19:08:42 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/19 18:08:32 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/21 20:01:22 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include <OpenCL/opencl.h>
 # include "../vectorlib/vector.h"
+//# include "fcntl.h"
 
 typedef	struct	s_camera
 {
@@ -102,6 +103,9 @@ double				glare_intense_giver(t_cache_vectors *vectors, t_vector light_vector, t
 int					shadow_figure_iteration(t_render *render, t_ray light_ray, double ray_len);
 int					is_shadow(t_render *render, t_vector P, int j);
 double				compute_lightning(t_render *render, t_cache_vectors *vectors, double specular);
+
+//parse.c
+void				parse(char *name, t_render *render);
 
 //render.c 
 void				start_render(t_render *render);

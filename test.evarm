@@ -1,0 +1,32 @@
+/plane
+	a = (0, -10, 0);
+	b = (10, 0, 0);
+	c = (0, 10, 0);
+	color = 0xFFFFFF;
+	specular = 50;
+\
+/sphere
+ 	center = (1, 1, 1);
+ 	radius = 10;
+	color = 0xFFFFFF;
+	specular = 50;
+\
+/cylinder
+	center = (0, 0, 1);
+	radius = 9;
+	direction = (0, 0, 0);
+	angle = 30;
+	color = 0xFFFFFF;
+	specular = 50;
+\
+/cone
+	tip = (0, 10, 1);
+	direction = (0, 0, 1);
+	angle = 30;
+	color = 0xFFFFFF;
+	specular = 50;
+\
+/light
+	position = (35, -65, 40);
+	intensity = 1;
+\
