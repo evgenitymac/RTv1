@@ -74,6 +74,12 @@ t_vector			normalize_init_helper(t_render *render, t_vector point, int type, int
 void				dli_pixel(t_render *render, double dli, int i, int color);
 double				quandratic_solve(double k1, double k2, double k3);
 
+//parse_additional.c
+void				parse_plane(t_render *render, int fd, int current);
+void				parse_sphere(t_render *render, int fd, int current);
+void				parse_cylinder(t_render *render, int fd, int current);
+void				parse_cone(t_render *render, int fd, int current);
+void				parse_light(t_render *render, int fd, int current);
 
 //event.c
 void				keyboard(t_render	*render, int *quit);

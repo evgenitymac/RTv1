@@ -43,12 +43,15 @@ void			sdl_loop(t_render *render)
 int				main(int argc, char **argv)
 {
 	t_render	render;
+//if empty folder
+//bad specular in plane
+//light in sphere
 
 	display_error(argc != 2, "where is file mazafaka");
 	render.win_width = 1280;
 	render.win_height = 720;
 	parse(argv[argc - 1], &render);
-/*	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	render.window = SDL_CreateWindow("RT", SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED, render.win_width,
 			render.win_height, SDL_WINDOW_RESIZABLE);
@@ -58,6 +61,5 @@ int				main(int argc, char **argv)
 	sdl_loop(&render);
 	SDL_DestroyWindow(render.window);
 	SDL_Quit();
-	*/
 	return (0);
 }

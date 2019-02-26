@@ -28,14 +28,6 @@ typedef struct		s_matrix_4x4
 	double			matrix[4][4];
 }					t_matrix_4x4;
 
-typedef	struct		s_plane
-{
-	double			a;
-	double			b;
-	double			c;
-	double			d;
-}					t_plane;
-
 typedef	struct		s_cylinder
 {
 	t_vector	center;
@@ -96,11 +88,6 @@ t_vector			vector_normalize(t_vector v);
 double				vector_length(t_vector v1);
 
 
-
-t_plane 			plane_equation(t_vector normal, t_vector point);
-double				solve_plane_x(t_plane pl, double y, double z);
-double				solve_plane_y(t_plane pl, double x, double z);
-double				solve_plane_z(t_plane pl, double x, double y);
 t_vector			rotation_vector_by_x_z(t_vector v, double x, double z);
 
 int					point_in_triangle_2d(t_triangle triangle, t_vector point);

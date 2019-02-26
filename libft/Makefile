@@ -56,7 +56,7 @@ SRC = ft_bzero.c \
 	   ft_strclr.c \
 	   ft_lstnew.c \
 	   ft_lstdelone.c \
-       ft_lstdel.c \
+           ft_lstdel.c \
 	   ft_lstadd.c \
 	   ft_striter.c \
 	   ft_striteri.c \
@@ -68,6 +68,8 @@ SRC = ft_bzero.c \
 	   ft_strjoin.c \
 	   ft_strtrim.c \
 	   ft_atoi.c \
+	   ft_atoi_base.c \
+	   ft_atof.c \
 	   ft_lstiter.c \
 	   ft_lstmap.c \
 	   ft_need_for_int_to_str.c \
