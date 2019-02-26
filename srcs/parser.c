@@ -68,6 +68,7 @@ void		type_of_object(char *file_name, t_render *render)
 	int current_cylinder = 0;
 	int current_cone = 0;
 	int current_light = 0;
+	// func thats check current <= count figure
 	while (get_next_line(fd, &line))
 	{
 		if (ft_strstr(line, "/plane") != 0)
