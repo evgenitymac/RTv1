@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 21:20:58 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/20 17:52:07 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/27 16:43:08 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int					shadow_figure_iteration_second(t_render *render,
 		if (z > 0 && z < ray_len - 1e-8)
 			return (1);
 	}
-	while (++i < render->cone_nb)
+	while (++i < render->plane_nb)
 	{
-		z = cone_intersection(light_ray, render->cone[i]);
+		z = plane_intersection(light_ray, render->plane[i]);
 		if (z > 0 && z < ray_len - 1e-8)
 			return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 19:08:42 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/21 20:01:22 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/27 16:58:18 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void				dli_pixel(t_render *render, double dli, int i, int color);
 double				quandratic_solve(double k1, double k2, double k3);
 
 //parse_additional.c
+void				parse_camera(t_render *render, int fd);
 void				parse_plane(t_render *render, int fd, int current);
 void				parse_sphere(t_render *render, int fd, int current);
 void				parse_cylinder(t_render *render, int fd, int current);
@@ -110,6 +111,8 @@ int					shadow_figure_iteration(t_render *render, t_ray light_ray, double ray_le
 int					is_shadow(t_render *render, t_vector P, int j);
 double				compute_lightning(t_render *render, t_cache_vectors *vectors, double specular);
 
+//main.c
+void				display_error(int cond, char *str);
 //parse.c
 void				parse(char *name, t_render *render);
 

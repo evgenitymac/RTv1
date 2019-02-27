@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 14:55:30 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/20 18:18:01 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/27 17:17:46 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,12 @@ t_vector		parse_vector(char *line)
 		line++;
 	}
 	return (vec);
-	//ft_atod
 	// put error if not 3 coord read
 }
 
 int		parse_color(char *line)
 {
 	int 	i;
-	//atoi base normeee!!!!!	
 	i = 0;
 	while (!ft_isdigit(line[i]))
 		i++;
@@ -76,13 +74,36 @@ int		parse_color(char *line)
 
 double		parse_double(char *line)
 {
-		//atod
 	int 	i;
 	
 	i = 0;
 	while (!ft_isdigit(line[i]))
 		i++;
 	return (ft_atof(&line[i]));
+}
+
+void		parse_camera(t_render *render, int fd)
+{
+	char	*line;
+
+	while (get_next_line(fd, &line))
+	{
+		if (ft_strstr(line, "position = "))
+			render->cam.position = parse_vector(line);
+		if (ft_strstr(line, "horizontal_angle = "))
+		{
+			render->cam.hor = parse_double(line) * M_PI / 180;
+			render->cam.focus = tan(render->cam.hor) * render->win_width / 2;
+		}
+		if (ft_strstr(line, "vertical_angle = "))
+			render->cam.vert = parse_double(line) * M_PI / 180;
+		if (ft_strchr(line, '\\') != 0)
+		{
+			ft_strdel(&line);
+			break;
+		}
+		ft_strdel(&line);
+	}
 }
 
 void		parse_plane(t_render *render, int fd, int current)
@@ -109,7 +130,6 @@ void		parse_plane(t_render *render, int fd, int current)
 		ft_strdel(&line);
 	}
 }
-
 
 void		parse_sphere(t_render *render, int fd, int current)
 {

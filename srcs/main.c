@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 16:41:14 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/21 20:10:05 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/02/27 17:19:26 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@ void	display_error(int cond, char *str)
 		ft_putendl(str);
 		exit(0);
 	}
+}
+
+
+void			resize_sdl(t_render *render)
+{
+	render->surface = SDL_GetWindowSurface(render->window);
+	clear_surface(render->surface);
+	render->win_width = render->event.window.data1;
+	render->win_height = render->event.window.data2;
+	free(render->rays);
+	render->cam.focus = tan(render->cam.hor) * render->win_width / 2.; 
+	render->rays = (t_ray *)malloc(sizeof(t_ray) * render->win_width * render->win_height);
+	start_render(render);
 }
 
 void			sdl_loop(t_render *render)
@@ -34,8 +47,8 @@ void			sdl_loop(t_render *render)
 				quit = 1;
 			if (render->event.type == SDL_KEYDOWN)
 				keyboard(render, &quit);
-			//if (render->event.window.event = SDL_WINDOWEVENT_RESIZED)
-			//	resize_sdl(render);
+			if (render->event.window.event == SDL_WINDOWEVENT_RESIZED)
+				resize_sdl(render);
 		}
 	}
 }
@@ -43,7 +56,6 @@ void			sdl_loop(t_render *render)
 int				main(int argc, char **argv)
 {
 	t_render	render;
-//if empty folder
 //bad specular in plane
 //light in sphere
 
@@ -56,7 +68,6 @@ int				main(int argc, char **argv)
 			SDL_WINDOWPOS_UNDEFINED, render.win_width,
 			render.win_height, SDL_WINDOW_RESIZABLE);
 	render.surface = SDL_GetWindowSurface(render.window);
-	init(&render);
 	start_render(&render);
 	sdl_loop(&render);
 	SDL_DestroyWindow(render.window);
