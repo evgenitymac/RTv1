@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 14:55:30 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/01 17:06:59 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/01 18:08:08 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,14 @@ t_vector		parse_vector(char *line)
 			}
 		}
 		if (coord_flag == 2)
+		{
 			vec.z = ft_atoi(line);
+			coord_flag++;
+		}
 		line++;
 	}
 	return (vec);
+	// put error if not 3 coord read
 }
 
 int		parse_color(char *line)
@@ -81,7 +85,6 @@ double		parse_double(char *line)
 void		parse_camera(t_render *render, int fd)
 {
 	char	*line;
-
 	render->cam.position = (t_vector){0, 0, 0, 1};
 	render->cam.hor = 0;
 	render->cam.focus = 0;
@@ -110,12 +113,11 @@ void		parse_plane(t_render *render, int fd, int current)
 {
 	char	*line;
 
-	render->plane[current].a = (t_vector){0, 0, 0, 1};
-	render->plane[current].b = (t_vector){0, 0, 0, 1};
-	render->plane[current].c = (t_vector){0, 0, 0, 1};
-	render->plane[current].color = 0xFFFFFF;
-	render->plane[current].specular = 0;
-	while (get_next_line(fd, &line))
+    render->sphere[current].center = (t_vector){0, 0, 0, 1};
+    render->sphere[current].r = 0;
+    render->sphere[current].color = 0xFFFFFF;
+    render->sphere[current].specular = 0;
+    while (get_next_line(fd, &line))
 	{
 		if (ft_strstr(line, "a = "))
 			render->plane[current].a = parse_vector(line);
@@ -139,13 +141,12 @@ void		parse_plane(t_render *render, int fd, int current)
 void		parse_sphere(t_render *render, int fd, int current)
 {
 	char	*line;
-
-
-	render->sphere[current].center = (t_vector){0, 0, 0, 1};
-	render->sphere[current].r = 0;
-	render->sphere[current].color = 0xFFFFFF;
-	render->sphere[current].specular = 0;
-	while (get_next_line(fd, &line))
+   
+    render->sphere[current].center = (t_vector){0, 0, 0, 1};
+    render->sphere[current].r = 0;
+    render->sphere[current].color = 0xFFFFFF;
+    render->sphere[current].specular = 0;
+    while (get_next_line(fd, &line))
 	{
 		if (ft_strstr(line, "center = "))
 			render->sphere[current].center = parse_vector(line);
@@ -168,12 +169,12 @@ void		parse_sphere(t_render *render, int fd, int current)
 void		parse_cylinder(t_render *render, int fd, int current)
 {
 	char	*line;
-
-	render->cylinder[current].center = (t_vector){0, 0, 0, 1};
-	render->cylinder[current].r = 0;
-	render->cylinder[current].direction = (t_vector){0, 0, 0, 1};
-	render->cylinder[current].color = 0xFFFFFF;
-	render->cylinder[current].specular = 0;
+    
+    render->cylinder[current].center = (t_vector){0, 0, 0, 1};
+    render->cylinder[current].r = 0;
+    render->cylinder[current].direction = (t_vector){0, 0, 0, 1};
+    render->cylinder[current].color = 0xFFFFFF;
+    render->cylinder[current].specular = 0;
 	while (get_next_line(fd, &line))
 	{
 		if (ft_strstr(line, "center = "))
@@ -198,12 +199,11 @@ void		parse_cylinder(t_render *render, int fd, int current)
 void		parse_cone(t_render *render, int fd, int current)
 {
 	char	*line;
-	
-	render->cone[current].tip = (t_vector){0, 0, 0, 1};
-	render->cone[current].direction = (t_vector){0, 0, 0, 1};
-	render->cone[current].angle = 0;
-	render->cone[current].color = 0xFFFFFF;
-	render->cone[current].specular = 0;
+    render->cone[current].tip = (t_vector){0, 0, 0, 1};
+    render->cone[current].direction = (t_vector){0, 0, 0, 1};
+    render->cone[current].angle = 0;
+    render->cone[current].color = 0xFFFFFF;
+    render->cone[current].specular = 0;
 	while (get_next_line(fd, &line))
 	{
 		if (ft_strstr(line, "tip = "))
@@ -229,9 +229,9 @@ void		parse_cone(t_render *render, int fd, int current)
 void		parse_light(t_render *render, int fd, int current)
 {
 	char	*line;
-
-	render->light[current].position = (t_vector){0, 0, 0, 1};
-	render->light[current].intensity = 0;
+    
+    render->light[current].position = (t_vector){0, 0, 0, 1};
+    render->light[current].intensity = 0;
 	while (get_next_line(fd, &line))
 	{
 		if (ft_strstr(line, "position = "))
