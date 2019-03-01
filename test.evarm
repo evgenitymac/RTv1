@@ -32,8 +32,8 @@
 /cone
 	tip = (-40, 0, 10);
 	direction = (0, 0, 1);
+	color = 0xFF00FF;
 	angle = 30;
-	color = 0xff69b4;
 	specular = 50;
 \
 /light
