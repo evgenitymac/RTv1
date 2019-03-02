@@ -6,42 +6,34 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 18:18:13 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/02 17:39:46 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/02 19:53:03 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv.h"
 
-//if fd is empy folder 
-
-
-void	allocate_objects(t_render *render)
+void		allocate_objects(t_render *render)
 {
-	render->rays = (t_ray *)malloc(sizeof(t_ray) * render->win_width * render->win_height);
+	render->rays = (t_ray *)malloc(sizeof(t_ray) *
+			render->win_width * render->win_height);
 	render->plane = (t_triangle *)malloc(sizeof(t_triangle) * render->plane_nb);
 	render->sphere = (t_sphere *)malloc(sizeof(t_sphere) * render->sphere_nb);
-	render->cylinder = (t_cylinder *)malloc(sizeof(t_cylinder) * render->cylinder_nb);
+	render->cylinder = (t_cylinder *)malloc(sizeof(t_cylinder)
+			* render->cylinder_nb);
 	render->cone = (t_cone *)malloc(sizeof(t_cone) * render->cone_nb);
 	render->light = (t_light *)malloc(sizeof(t_light) * render->light_nb);
 }
 
-
-
 void		count_objects(char *file_name, t_render *render)
 {
 	char	*line;
-	int camera_count;
-	int	fd;
+	int		fd;
+	int		camera_count;
 
-	fd = open(file_name, O_RDWR);
-	display_error(fd <= 0, "file not found");
-	render->plane_nb = 0;
-	render->sphere_nb = 0;
-	render->cylinder_nb = 0;
-	render->cone_nb = 0;
-	render->light_nb = 0;
+	init_nb_objects(render);
+	display_error(((fd = open(file_name, O_RDWR)) <= 0), "file not found");
 	camera_count = 0;
-	while (get_next_line(fd, &line))
+	while (get_next_line(fd, &line) > 0)
 	{
 		if (ft_strstr(line, "/camera") != 0)
 			camera_count++;
@@ -61,57 +53,45 @@ void		count_objects(char *file_name, t_render *render)
 	close(fd);
 }
 
+void		count_init(t_count *count)
+{
+	count->current_plane = 0;
+	count->current_sphere = 0;
+	count->current_cylinder = 0;
+	count->current_cone = 0;
+	count->current_light = 0;
+}
+
 void		type_of_object(char *file_name, t_render *render)
 {
 	char	*line;
-	int	fd;
-	
+	int		fd;
+	t_count count;
+
 	fd = open(file_name, O_RDONLY);
-	int current_plane = 0;
-	int current_sphere = 0;
-	int current_cylinder = 0;
-	int current_cone = 0;
-	int current_light = 0;
-	while (get_next_line(fd, &line))
+	count_init(&count);
+	while (get_next_line(fd, &line) > 0)
 	{
 		if (ft_strstr(line, "/camera") != 0)
 			parse_camera(render, fd);
 		else if (ft_strstr(line, "/plane") != 0)
-		{
-			parse_plane(render, fd, current_plane);
-			current_plane++;
-		}
+			parse_plane(render, fd, count.current_plane++);
 		else if (ft_strstr(line, "/sphere") != 0)
-		{
-			parse_sphere(render, fd, current_sphere);
-			current_sphere++;
-		}
+			parse_sphere(render, fd, count.current_sphere++);
 		else if (ft_strstr(line, "/cylinder") != 0)
-		{
-			parse_cylinder(render, fd, current_cylinder);
-			current_cylinder++;
-		}
+			parse_cylinder(render, fd, count.current_cylinder++);
 		else if (ft_strstr(line, "/cone") != 0)
-		{
-			parse_cone(render, fd, current_cone);
-			current_cone++;
-		}
+			parse_cone(render, fd, count.current_cone++);
 		else if (ft_strstr(line, "/light") != 0)
-		{
-			parse_light(render, fd, current_light);
-			current_light++;
-		}
+			parse_light(render, fd, count.current_light++);
 		ft_strdel(&line);
-		
 	}
 	close(fd);
 }
 
 void		parse(char *name, t_render *render)
 {
-
 	count_objects(name, render);
 	allocate_objects(render);
 	type_of_object(name, render);
-	
 }

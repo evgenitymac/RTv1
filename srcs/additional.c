@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 14:07:19 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/02 15:10:16 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/02 21:02:32 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void				ray_cast(t_render *render)
 {
 	int				i;
 	t_matrix_4x4	rotation;
+
 	i = -1;
 	rotation = matrix_multiply(
 			x_rotation_matrix(-render->cam.vert),
 			z_rotation_matrix(render->cam.hor));
-
 	while (++i < render->win_width * render->win_height)
 	{
 		render->rays[i].origin = render->cam.position;

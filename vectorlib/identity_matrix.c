@@ -6,13 +6,13 @@
 /*   By: jlucas-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 18:09:19 by jlucas-l          #+#    #+#             */
-/*   Updated: 2019/01/21 18:42:44 by jlucas-l         ###   ########.fr       */
+/*   Updated: 2019/03/02 19:02:20 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 
-t_matrix_4x4	identity_matrix()
+t_matrix_4x4	identity_matrix(void)
 {
 	t_matrix_4x4	res;
 	int				i;

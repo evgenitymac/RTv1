@@ -6,7 +6,7 @@
 /*   By: jlucas-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 17:50:40 by jlucas-l          #+#    #+#             */
-/*   Updated: 2019/01/25 20:20:10 by jlucas-l         ###   ########.fr       */
+/*   Updated: 2019/03/02 19:00:33 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,3 @@ int		point_in_triangle_2d(t_triangle triangle, t_vector point)
 		return (1);
 	return (0);
 }
-

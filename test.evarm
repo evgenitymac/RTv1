@@ -11,16 +11,10 @@
 	specular = 50;
 \
 /sphere
- 	center = (0, 0, 9);
+ 	center = (0, 0, 0);
  	radius = 18;
 	color = 0x0000FF;
-	specular = 50;
-\
-/sphere
- 	center = (0, -30, 9);
- 	radius = 5;
-	color = 0x0000FF;
-	specular = 50;
+	specular = 10;
 \
 /cylinder
 	center = (20, 0, 0);
@@ -39,10 +33,4 @@
 /light
 	position = (35, -65, 40);
 	intensity = 0.9;
-\
-/sphere
- 	center = (0, -30, 40);
- 	radius = 5;
-	color = 0x0000FF;
-	specular = 50;
 \

@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 16:41:14 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/02 17:55:15 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/02 19:07:50 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void			display_error(int cond, char *str)
 	}
 }
 
-
 void			resize_sdl(t_render *render)
 {
 	render->surface = SDL_GetWindowSurface(render->window);
@@ -29,8 +28,9 @@ void			resize_sdl(t_render *render)
 	render->win_width = render->event.window.data1;
 	render->win_height = render->event.window.data2;
 	free(render->rays);
-	render->cam.focus = render->win_width / 2. / tan(60 * M_PI / 180); 
-	render->rays = (t_ray *)malloc(sizeof(t_ray) * render->win_width * render->win_height);
+	render->cam.focus = render->win_width / 2. / tan(60 * M_PI / 180);
+	render->rays = (t_ray *)malloc(sizeof(t_ray) *
+			render->win_width * render->win_height);
 	start_render(render);
 }
 
@@ -56,14 +56,11 @@ void			sdl_loop(t_render *render)
 int				main(int argc, char **argv)
 {
 	t_render	render;
-//bad specular in plane
-//light in sphere
 
 	display_error(argc != 2, "where is file mazafaka");
 	render.win_width = 1280;
 	render.win_height = 720;
 	parse(argv[argc - 1], &render);
-	ft_putendl("here after parse");
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	render.window = SDL_CreateWindow("RT", SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED, render.win_width,
