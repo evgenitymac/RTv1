@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 18:01:57 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/02 15:09:51 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/02 17:11:10 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void					start_render(t_render *render)
 	int			i;
 
 	i = -1;
+	ft_putendl("here");
 	ray_cast(render);
 	while (++i < render->win_height * render->win_width)
 		figure_iteration(render, i);

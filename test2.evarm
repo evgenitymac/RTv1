@@ -1,0 +1,26 @@
+/camera
+	position = (0, -50, 30);
+	horizontal_angle = 0;
+	vertical_angle = 0;
+\
+/sphere
+	center = (0, 0, 9);
+	radius = 3;
+	color = 0x0000FF;
+	specular = 50;
+\
+/plane
+	a = (0, -10, 0);
+	b = (10, 0, 0);
+	c = (0, 10, 0);
+	color = 0xFF0000;
+	specular = 50;
+\
+/light
+	position = (-30, 0, 30);
+	intensity = 0.9;
+\
+/light
+	position = (30, 0, 30);
+	intensity = 0.9;
+\

@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 21:20:58 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/02 15:10:49 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/02 17:46:18 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ double				compute_lightning(t_render *render,
 	while (++j < render->light_nb)
 	{
 		if (is_shadow(render, vectors->point, j) != 0)
-			break ;
+			continue;
 		light_vector = vector_normalize(vector_sub(
 					render->light[j].position, vectors->point));
 		intensivity += light_intense_giver(vectors, light_vector,

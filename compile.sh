@@ -1,1 +1,1 @@
-gcc -Wall -Wextra -Werror -g srcs/*.c vectorlib/*.c -L ./libft -lft -F ~/Library/Frameworks/ -framework SDL2 -I ./libft -I ./includes
+gcc -Wall -Wextra -g srcs/*.c vectorlib/*.c -L ./libft -lft -F ~/Library/Frameworks/ -framework SDL2 -I ./libft -I ./includes

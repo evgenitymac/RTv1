@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 16:41:14 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/02 15:12:48 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/02 17:55:15 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				main(int argc, char **argv)
 	render.win_width = 1280;
 	render.win_height = 720;
 	parse(argv[argc - 1], &render);
+	ft_putendl("here after parse");
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	render.window = SDL_CreateWindow("RT", SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED, render.win_width,

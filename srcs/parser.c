@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 18:18:13 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/02 15:13:00 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/02 17:39:46 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,33 +76,33 @@ void		type_of_object(char *file_name, t_render *render)
 	{
 		if (ft_strstr(line, "/camera") != 0)
 			parse_camera(render, fd);
-		if (ft_strstr(line, "/plane") != 0)
+		else if (ft_strstr(line, "/plane") != 0)
 		{
 			parse_plane(render, fd, current_plane);
 			current_plane++;
 		}
-		if (ft_strstr(line, "/sphere") != 0)
+		else if (ft_strstr(line, "/sphere") != 0)
 		{
 			parse_sphere(render, fd, current_sphere);
 			current_sphere++;
 		}
-	
-		if (ft_strstr(line, "/cylinder") != 0)
+		else if (ft_strstr(line, "/cylinder") != 0)
 		{
 			parse_cylinder(render, fd, current_cylinder);
 			current_cylinder++;
 		}
-		if (ft_strstr(line, "/cone") != 0)
+		else if (ft_strstr(line, "/cone") != 0)
 		{
 			parse_cone(render, fd, current_cone);
 			current_cone++;
 		}
-		if (ft_strstr(line, "/light") != 0)
+		else if (ft_strstr(line, "/light") != 0)
 		{
 			parse_light(render, fd, current_light);
 			current_light++;
 		}
 		ft_strdel(&line);
+		
 	}
 	close(fd);
 }

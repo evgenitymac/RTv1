@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 14:55:30 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/02 15:54:53 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/02 17:33:12 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,11 @@ void		parse_plane(t_render *render, int fd, int current)
 {
 	char	*line;
 
-    render->sphere[current].center = (t_vector){0, 0, 0, 1};
-    render->sphere[current].r = 0;
-    render->sphere[current].color = 0xFFFFFF;
-    render->sphere[current].specular = 0;
+    render->plane[current].a = (t_vector){0, 0, 0, 1};
+    render->plane[current].b = (t_vector){0, 0, 0, 1};
+    render->plane[current].c = (t_vector){0, 0, 0, 1};
+    render->plane[current].color = 0xFFFFFF;
+    render->plane[current].specular = 0;
     while (get_next_line(fd, &line))
 	{
 		if (ft_strstr(line, "a = "))
@@ -168,7 +169,7 @@ void		parse_sphere(t_render *render, int fd, int current)
 void		parse_cylinder(t_render *render, int fd, int current)
 {
 	char	*line;
-    
+		
     render->cylinder[current].center = (t_vector){0, 0, 0, 1};
     render->cylinder[current].r = 0;
     render->cylinder[current].direction = (t_vector){0, 0, 0, 1};
@@ -198,8 +199,9 @@ void		parse_cylinder(t_render *render, int fd, int current)
 void		parse_cone(t_render *render, int fd, int current)
 {
 	char	*line;
-    render->cone[current].tip = (t_vector){0, 0, 0, 1};
-    render->cone[current].direction = (t_vector){0, 0, 0, 1};
+    
+	render->cone[current].tip = (t_vector){0, 0, 0, 1};
+    render->cone[current].direction = (t_vector){0, 0, 1, 1};
     render->cone[current].angle = 0;
     render->cone[current].color = 0xFFFFFF;
     render->cone[current].specular = 0;
