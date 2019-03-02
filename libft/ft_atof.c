@@ -6,86 +6,58 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 13:27:39 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/27 13:27:41 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/02 15:39:49 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		exponent(const char **s, int *e, int *c)
+static double	ft_get_dec(const char *str)
+{
+	double		nb;
+	double		dec;
+	int			i;
+	int			j;
+
+	nb = 0.0;
+	dec = 0.0;
+	i = 0;
+	j = 0;
+	while (*str >= '0' && *str <= '9')
+		nb = (nb * 10.0) + (*(str++) - '0');
+	if (*(str++) == '.')
+	{
+		while (*str >= '0' && *str <= '9')
+		{
+			dec = (dec * 10.0) + (*(str++) - '0');
+			i++;
+		}
+	}
+	while (j++ < i)
+		dec /= 10.0;
+	if (*str == ',')
+		return (nb + dec);
+	return (nb + dec);
+}
+
+double			ft_atof(const char *str)
 {
 	int			sign;
-	int			i;
+	double		res;
 
-	if (*c == 'e' || *c == 'E')
+	res = 0.0;
+	sign = 1;
+	if (!*str)
+		return (0);
+	while (*str == '\t' || *str == '\n' || *str == '\v' || *str == '\f'
+			|| *str == '\r' || *str == ' ')
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		sign = 1;
-		i = 0;
-		*c = *(*s)++;
-		if (*c == '+')
-			*c = *(*s)++;
-		else if (*c == '-')
-		{
-			*c = *(*s)++;
+		if (*str == '-')
 			sign = -1;
-		}
-		while (ft_isdigit(*c))
-		{
-			i = i * 10 + (*c - '0');
-			*c = *(*s)++;
-		}
-		*e += i * sign;
+		str++;
 	}
-}
-
-static void		exponent_to_d(double *a, int *e)
-{
-	while (*e > 0)
-	{
-		*a *= 10.0;
-		(*e)--;
-	}
-	while (*e < 0)
-	{
-		*a *= 0.1;
-		(*e)++;
-	}
-}
-
-static double	ft_atof2(char const *src, int p, double a)
-{
-	int			e;
-	int			c;
-
-	e = 0;
-	if (*src == '-')
-	{
-		p = -1;
-		++src;
-	}
-	if (*src == '+')
-		++src;
-	while (*src == ' ')
-		++src;
-	while ((c = *src++) != '\0' && ft_isdigit(c))
-		a = a * 10.0 + (c - '0');
-	if (c == '.')
-		while ((c = *src++) != '\0' && ft_isdigit(c))
-		{
-			a = a * 10.0 + (c - '0');
-			e = e - 1;
-		}
-	exponent(&src, &e, &c);
-	exponent_to_d(&a, &e);
-	return (p * a);
-}
-
-double			ft_atof(char const *src)
-{
-	int		p;
-
-	p = 1;
-	if (!ft_isdigit(src[0]) && src[0] != '-')
-		ft_putstr("Not a number\n");
-	return (ft_atof2(src, p, 0.0));
+	res = ft_get_dec(str);
+	return (res * sign);
 }

@@ -25,7 +25,7 @@
 /cylinder
 	center = (20, 0, 0);
 	radius = 9;
-	direction = (0, 0, 1);
+	direction = (-0.3, 0, 1);
 	color = 0x00FF00;
 	specular = 50;
 \

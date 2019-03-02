@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 14:55:30 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/01 21:21:31 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/02 15:54:53 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_vector		parse_vector(char *line)
 	{
 		if (coord_flag == 0)
 		{
-			vec.x = ft_atoi(line);
+			vec.x = ft_atof(line);
 			while (*line)
 			{
 				if (*line == ',')
@@ -40,7 +40,7 @@ t_vector		parse_vector(char *line)
 		}
 		if (coord_flag == 1)
 		{
-			vec.y = ft_atoi(line);
+			vec.y = ft_atof(line);
 			coord_flag++;
 			while (*line)
 			{
@@ -54,7 +54,7 @@ t_vector		parse_vector(char *line)
 		}
 		if (coord_flag == 2)
 		{
-			vec.z = ft_atoi(line);
+			vec.z = ft_atof(line);
 			coord_flag++;
 		}
 		line++;
@@ -181,7 +181,7 @@ void		parse_cylinder(t_render *render, int fd, int current)
 		if (ft_strstr(line, "radius = "))
 			render->cylinder[current].r = parse_double(line);
 		if (ft_strstr(line, "direction = "))
-			render->cylinder[current].direction = parse_vector(line);
+			render->cylinder[current].direction = vector_normalize(parse_vector(line));
 		if (ft_strstr(line, "color = "))
 			render->cylinder[current].color = parse_color(line);
 		if (ft_strstr(line, "specular = "))
@@ -208,7 +208,7 @@ void		parse_cone(t_render *render, int fd, int current)
 		if (ft_strstr(line, "tip = "))
 			render->cone[current].tip = parse_vector(line);
 		if (ft_strstr(line, "direction = "))
-			render->cone[current].direction = parse_vector(line);
+			render->cone[current].direction = vector_normalize(parse_vector(line));
 		if (ft_strstr(line, "angle = "))
 			render->cone[current].angle = parse_double(line) * M_PI / 180;	
 		if (ft_strstr(line, "color = "))
