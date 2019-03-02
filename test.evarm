@@ -1,6 +1,6 @@
 /camera
 	position = (0, -50, 20);
-	horizontal_angle = 30;
+	horizontal_angle = 0;
 	vertical_angle = 0;
 \
 /plane

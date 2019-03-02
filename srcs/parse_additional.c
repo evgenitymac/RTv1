@@ -6,7 +6,7 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 14:55:30 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/01 18:08:08 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/01 21:21:31 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ double		parse_double(char *line)
 	int 	i;
 	
 	i = 0;
-	while (!ft_isdigit(line[i]))
+	while (!ft_isdigit(line[i]) && line[i] != '-')
 		i++;
 	return (ft_atof(&line[i]));
 }
@@ -87,7 +87,7 @@ void		parse_camera(t_render *render, int fd)
 	char	*line;
 	render->cam.position = (t_vector){0, 0, 0, 1};
 	render->cam.hor = 0;
-	render->cam.focus = 0;
+	render->cam.focus = render->win_width / tan(70 * M_PI / 180);
 	render->cam.vert = 0;
 	while (get_next_line(fd, &line))
 	{
@@ -96,7 +96,6 @@ void		parse_camera(t_render *render, int fd)
 		if (ft_strstr(line, "horizontal_angle = "))
 		{
 			render->cam.hor = parse_double(line) * M_PI / 180;
-			render->cam.focus = tan(render->cam.hor) * render->win_width / 2;
 		}
 		if (ft_strstr(line, "vertical_angle = "))
 			render->cam.vert = parse_double(line) * M_PI / 180;
@@ -212,7 +211,6 @@ void		parse_cone(t_render *render, int fd, int current)
 			render->cone[current].direction = parse_vector(line);
 		if (ft_strstr(line, "angle = "))
 			render->cone[current].angle = parse_double(line) * M_PI / 180;	
-		//if angle = 0 return error cause float. point exeption will be
 		if (ft_strstr(line, "color = "))
 			render->cone[current].color = parse_color(line);
 		if (ft_strstr(line, "specular = "))

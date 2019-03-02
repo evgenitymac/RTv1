@@ -6,31 +6,36 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 14:07:19 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/27 15:51:06 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/01 21:22:22 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv.h"
 
-void			ray_cast(t_render *render)
+void				ray_cast(t_render *render)
 {
-	int			i;
-
+	int				i;
+	t_matrix_4x4	rotation;
 	i = -1;
+	rotation = matrix_multiply(
+			x_rotation_matrix(-render->cam.vert),
+			z_rotation_matrix(render->cam.hor));
+
 	while (++i < render->win_width * render->win_height)
 	{
 		render->rays[i].origin = render->cam.position;
-		render->rays[i].direction = vector_normalize((t_vector)
+		render->rays[i].direction = vector_matrix_multiply(
+				vector_normalize((t_vector)
 				{
 				(i % render->win_width - render->win_width / 2),
 				render->cam.focus,
 				-(i / render->win_width - render->win_height / 2),
 				0.
-				});
+				}), rotation);
 	}
 }
 
-void			dli_pixel(t_render *render, double dli, int i, int color)
+void				dli_pixel(t_render *render, double dli, int i, int color)
 {
 	if (dli > 2.)
 		dli = 2.;
@@ -42,12 +47,12 @@ void			dli_pixel(t_render *render, double dli, int i, int color)
 				get_color(color, 0xFFFFFF, dli - 1.));
 }
 
-double			quandratic_solve(double k1, double k2, double k3)
+double				quandratic_solve(double k1, double k2, double k3)
 {
-	double		diskr;
-	double		t1;
-	double		t2;
-	double		tmp;
+	double			diskr;
+	double			t1;
+	double			t2;
+	double			tmp;
 
 	diskr = k2 * k2 - 4 * k1 * k3;
 	if (diskr < 0)
@@ -67,9 +72,9 @@ double			quandratic_solve(double k1, double k2, double k3)
 	return (t1);
 }
 
-t_vector		cone_normalize(t_vector point, t_cone cone)
+t_vector			cone_normalize(t_vector point, t_cone cone)
 {
-	double		len;
+	double			len;
 
 	len = vector_length(vector_sub(point, cone.tip));
 	if (dot_product(vector_sub(cone.tip, point), cone.direction) > 0)
@@ -78,7 +83,7 @@ t_vector		cone_normalize(t_vector point, t_cone cone)
 			vector_scalar_multiply(cone.direction, len)))));
 }
 
-t_vector		normalize_init_helper(t_render *render,
+t_vector			normalize_init_helper(t_render *render,
 		t_vector point, int type, int t)
 {
 	if (type == 0)

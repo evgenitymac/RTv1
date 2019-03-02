@@ -6,13 +6,13 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 16:41:14 by maheiden          #+#    #+#             */
-/*   Updated: 2019/02/27 17:19:26 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/01 20:25:45 by maheiden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv.h"
 
-void	display_error(int cond, char *str)
+void			display_error(int cond, char *str)
 {
 	if (cond)
 	{
@@ -29,7 +29,7 @@ void			resize_sdl(t_render *render)
 	render->win_width = render->event.window.data1;
 	render->win_height = render->event.window.data2;
 	free(render->rays);
-	render->cam.focus = tan(render->cam.hor) * render->win_width / 2.; 
+	render->cam.focus = render->win_width / 2. / tan(60 * M_PI / 180); 
 	render->rays = (t_ray *)malloc(sizeof(t_ray) * render->win_width * render->win_height);
 	start_render(render);
 }
