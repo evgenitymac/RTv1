@@ -6,16 +6,16 @@
 /*   By: maheiden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 19:08:42 by maheiden          #+#    #+#             */
-/*   Updated: 2019/03/02 21:14:13 by maheiden         ###   ########.fr       */
+/*   Updated: 2019/03/04 15:56:06 by jlucas-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTV_H
 # define RTV_H
-# include <SDL2/SDL.h>
-# include "../libft/libft.h"
+# include <SDL.h>
+# include "libft.h"
 # include <OpenCL/opencl.h>
-# include "../vectorlib/vector.h"
+# include "vector.h"
 
 typedef	struct	s_camera
 {

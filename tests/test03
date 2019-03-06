@@ -1,0 +1,16 @@
+/camera
+	position = (0, 0, 50);
+	horizontal_angle = 0;
+	vertical_angle = -90;
+\
+/cone
+	tip = (0, 0, 0);
+	direction = (0, 1, 0);
+	angle = 30;
+	color = 0xff69b4;
+	specular = 50;
+\
+/light
+	position = (0, 0, 60);
+	intensity = 0.9;
+\

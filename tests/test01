@@ -1,0 +1,15 @@
+/camera
+	position = (0, -50, 0);
+	horizontal_angle = 0;
+	vertical_angle = 0;
+\
+/sphere
+	center = (0, 0, 0);
+	radius = 9;
+	color = 0xFF0000;
+	specular = 0;
+\
+/light
+	position = (0, -50, 0);
+	intensity = 0.9;
+\

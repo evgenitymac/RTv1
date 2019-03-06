@@ -1,0 +1,44 @@
+/camera
+	position = (0, -50, 20);
+	horizontal_angle = 0;
+	vertical_angle = 0;
+\
+/plane
+	a = (0, -10, 0);
+	b = (10, 0, 0);
+	c = (0, 10, 0);
+	color = 0xFF0000;
+	specular = 0;
+\
+/plane
+	a = (0, 50, 1);
+	b = (-1, 50, 0);
+	c = (1, 50, 0);
+	color = 0x0000FF;
+	specular = 0;
+\
+/sphere
+ 	center = (-10, -9, 6);
+ 	radius = 5;
+	color = 0xFF0000;
+	specular = 50;
+\
+/cylinder
+	center = (-20, 0, 0);
+	radius = 3;
+	direction = (0.4, -0.5, 1);
+	color = 0x00FF00;
+	specular = 50;
+\
+/cone
+	tip = (-3, -9, 10);
+	direction = (-0.5, 0, 1);
+	angle = 25;
+	color = 0xff69b4;
+	specular = 50;
+\
+/light
+	position = (-20, -25, 10);
+	intensity = 0.9;
+\
+

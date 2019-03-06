@@ -1,0 +1,16 @@
+/camera
+	position = (0, -10, 0);
+	horizontal_angle = 0;
+	vertical_angle = 0;
+\
+/cylinder
+	center = (0, 0, 0);
+	radius = 3;
+	direction = (0, 0, 1);
+	color = 0xFFFF00;
+	specular = 50;
+\
+/light
+	position = (0, -10, 0);
+	intensity = 0.9;
+\
